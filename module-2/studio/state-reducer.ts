@@ -1,13 +1,33 @@
-import { Annotation, StateGraph, START, END } from "@langchain/langgraph";
+import {
+  messagesStateReducer,
+  MessagesAnnotation,
+  Annotation,
+  StateGraph,
+  START,
+  END,
+} from "@langchain/langgraph";
+import {
+  BaseMessage,
+  AIMessage,
+  HumanMessage,
+  RemoveMessage,
+} from "@langchain/core/messages";
 
-type Mood = "happy" | "sad";
+const reduceArray = <T>(left: T[] | undefined, right: T[] | undefined) => {
+  if (!left) left = [];
+  if (!right) right = [];
+  return left.concat(right);
+};
 
 export const StateAnnotation = Annotation.Root({
   foo: Annotation<number[]>({
-    reducer: (state: number[], update: number[]) => state.concat(update),
+    // Basic inline reducer
+    //  reducer: (state: number[], update: number[]) => state.concat(update),
+
+    // Custom reducer
+    reducer: (state: number[], update: number[]) => reduceArray(state, update),
     default: () => [],
   }),
-  otherKey: Annotation<string>,
 });
 export type State = typeof StateAnnotation.State;
 
@@ -43,6 +63,44 @@ export const graph = builder.compile();
   const agentNextState = await graph.invoke({
     foo: [1],
   });
-
   console.log(agentNextState);
+
+  // Messages States
+  const CustuomMessagesState = Annotation.Root({
+    messages: Annotation<BaseMessage[]>({
+      reducer: messagesStateReducer,
+    }),
+    addedKey1: Annotation<string>,
+    addedKey2: Annotation<string>,
+  });
+
+  const ExtendedMessagesState = Annotation.Root({
+    ...MessagesAnnotation.spec,
+    addedKey1: Annotation<string>,
+    addedKey2: Annotation<string>,
+  });
+
+  const initial_messages = [
+    new AIMessage({ content: "Hello! How can I assist you?" }),
+    new HumanMessage({
+      content: "I'm looking for information on marine biology.",
+      name: "Lance",
+    }),
+  ];
+
+  // New message to add
+  const new_message = new AIMessage({
+    content:
+      "Sure, I can help with that. What specifically are you interested in?",
+  });
+  let messages = messagesStateReducer(initial_messages, new_message);
+  // Test
+  console.log("Concatened messages :>>", messages);
+  const delete_messages = messages
+    .slice(-2)
+    .map((m) => new RemoveMessage({ id: m.id || "" }));
+  console.log(
+    "Messages after last 2 deleted :>>",
+    messagesStateReducer(messages, delete_messages)
+  );
 })();

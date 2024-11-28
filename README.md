@@ -1,6 +1,8 @@
-# LangChain Academy - Introduction to LangGraph
+# LangChain Academy - Introduction to LangGraph - TypeScript UNOFFICIAL version
 
-# TypeScript UNOFFICIAL version
+This is a TypeScript port of the original Python implementation of the excellent Introduction to LangGraph step-by-step tutorial. It's my personal, unofficial port of the original code. Only the code in the `module-n\studio` folder, intended to be launched with LangGraph Studio, is concerned. I have not ported the Jupyter notebooks. In the original Python version, some notebooks were not reproduced as an agent in the studio folder. In such cases, I generally created a corresponding agent in the `module-n\studio` folder.
+
+🚧 This is a work in progress ! Currently, only module 1 and the beginning of module 2 have been ported to TypeScript. 🚧
 
 ## Introduction
 
