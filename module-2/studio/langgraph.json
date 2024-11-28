@@ -1,11 +1,9 @@
 {
   "dockerfile_lines": [],
   "graphs": {
-    "chatbot": "./chatbot.py:graph"
+    "state-schema": "./state-schema.ts:graph"
   },
   "env": "./.env",
-  "python_version": "3.11",
-  "dependencies": [
-    "."
-  ]
+  "node_version": "20",
+  "dependencies": ["."]
 }

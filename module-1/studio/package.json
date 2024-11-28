@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@langchain/core": "^0.3.19",
+    "@langchain/langgraph": "^0.2.22",
+    "@langchain/openai": "^0.3.14",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "scripts": {
+    "build": "esbuild ./module-1/studio/simple.ts --bundle --outfile=dist/simple.js --platform=node --format=esm"
+  }
+}

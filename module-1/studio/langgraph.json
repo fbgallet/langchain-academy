@@ -1,13 +1,16 @@
 {
   "dockerfile_lines": [],
   "graphs": {
-    "simple_graph": "./simple.py:graph",
-    "router": "./router.py:graph",
-    "agent": "./agent.py:graph"
+    "simple_graph": "./simple.ts:graph",
+    "router_graph": "./router.ts:graph",
+    "agent_graph": "./agent.ts:graph"
   },
-  "env": "./.env",
-  "python_version": "3.11",
-  "dependencies": [
-    "."
-  ]
+  "env": ".env",
+  "node_version": "20",
+  "dependencies": {
+    "@langchain/core": "^0.3.19",
+    "@langchain/langgraph": "^0.2.22",
+    "@langchain/openai": "^0.3.14",
+    "zod": "^3.23.8"
+  }
 }
